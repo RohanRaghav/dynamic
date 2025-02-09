@@ -416,8 +416,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background: #001F3F;
   display: flex;
   justify-content: center;
@@ -951,6 +951,46 @@ th {
   width: 40vw;
   height: auto;
 }
+.coloring{
+  background-color: white;
+  color: #001F3F;
+  width: 80vw;
+}
+.teamholder{
+  width: 200px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #001F3F;
+  color: white;
+  align-items: center;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+.student-row {
+  display: flex;
+  gap: 15px; /* Adjust spacing between elements */
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Ensures responsiveness */
+  border: 1px solid #001F3F;
+  padding: 8px;
+  border-radius: 15px;
+}
+.teamholder {
+  flex: 1; /* Makes each item take equal space */
+  min-width: 150px; /* Prevents items from shrinking too much */
+  text-align: center;
+  padding: 8px;
+}
+
+.centering{
+  width: 100vw;
+  align-items: center;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
 @media screen and (max-width: 600px){
   .back{
     display: none;
@@ -972,7 +1012,6 @@ th {
   .logo{
     width: 70px;
     position: relative;
-    left: 30px;
   }
   .division{
     width: 100vw;

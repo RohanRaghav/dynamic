@@ -19,7 +19,7 @@ const TeamPanel = () => {
 
         // Identify missing fields
         const missing = {};
-        ['theme', 'objective', 'problemStatement', 'problemDefinition', 'softwareTechnology'].forEach(field => {
+        [ 'objective', 'problemStatement', 'problemDefinition', 'softwareTechnology'].forEach(field => {
           if (!data[field]) {
             missing[field] = '';
           }
@@ -122,7 +122,7 @@ const TeamPanel = () => {
   };
 
   return (
-    <div>
+    <div className='overflow'>
       <div className="dashboard">
         <div className="navbar">
           <div></div>
@@ -137,38 +137,41 @@ const TeamPanel = () => {
           </div>
         </div>
 
-        <div>
+        <div className='centering'>
           {team ? (
-            <div>
+            <div className='coloring'>
+              <h1>MEMBER’S REGISTRATION</h1>
                 <div className='divisions'>
-              <p><strong>Team Name:</strong> {team.teamName}</p>
-              <p><strong>Leader Name:</strong> {team.leaderName}</p>
-              <p><strong>Email:</strong> {team.email}</p>
-              <p><strong>Phone Number:</strong> {team.phoneNumber}</p>
-              <p><strong>Department:</strong> {team.department}</p>
-              <p><strong>Gender:</strong> {team.gender}</p>
+                  <div className='teamholder'>{team.teamName}</div>
+                  <div className='teamholder'>{team.leaderName}</div>
+                  <div className='teamholder'>{team.email}</div>
+                  <div className='teamholder'>{team.phoneNumber}</div>
+                  <div className='teamholder'>{team.department}</div>
+                  <div className='teamholder'>{team.gender}</div>
                 </div>
               {/* Editable Fields for Missing Information */}
               {Object.keys(missingFields).length > 0 ? (
                 <div>
                   <h3>Complete Missing Information</h3>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
                   {Object.entries(missingFields).map(([key, value]) => (
-                    <div key={key}>
-                      <label>{key.replace(/([A-Z])/g, ' $1')}:</label>
-                      <input
-                        type="text"
-                        value={value}
-                        onChange={(e) => handleFieldChange(e, key)}
-                      />
-                    </div>
+                    <div key={key} style={{ display: "flex", flexDirection: "column" }}>
+                    <input
+                      type="text"
+                      placeholder={key.replace(/([A-Z])/g, " $1")}
+                      value={value}
+                      onChange={(e) => handleFieldChange(e, key)}
+                      style={{ padding: "8px", borderRadius: "5px", border: "1px solid #ccc" }}
+                    />
+                  </div>
                   ))}
+                  </div>
                   <button onClick={updateDetails} className='logout'>Save Details</button>
                 </div>
               ) : (
                 <div>
                   <h3>Team Information</h3>
                   <div className='divisions'>
-                  <p><strong>Theme:</strong> {team.theme}</p>
                   <p><strong>Objective:</strong> {team.objective}</p>
                   <p><strong>Problem Statement:</strong> {team.problemStatement}</p>
                   </div>
@@ -179,28 +182,17 @@ const TeamPanel = () => {
               )}
 <center>
 <h3>Team Members:</h3>
-<table class="team-members-table">
-  <thead>
-    <tr>
-      <th>Student Name</th>
-      <th>Student Number</th>
-      <th>Email</th>
-      <th>UID</th>
-      <th>Gender</th>
-    </tr>
-  </thead>
-  <tbody>
-    {team.students.map((student, index) => (
-      <tr key={index}>
-        <td>{student.name}</td>
-        <td>{student.number}</td>
-        <td>{student.email}</td>
-        <td>{student.uid}</td>
-        <td>{student.gender}</td>
-      </tr>
-    ))}
-  </tbody>
-</table>
+<div className="divisions">
+  {team.students.map((student, index) => (
+    <div key={index} className="student-row">
+      <div className="teamholder">{student.name}</div>
+      <div className="teamholder">{student.number}</div>
+      <div className="teamholder">{student.email}</div>
+      <div className="teamholder">{student.uid}</div>
+      <div className="teamholder">{student.gender}</div>
+    </div>
+  ))}
+</div>
 </center>
 
               {/* Add New Team Member */}
@@ -222,8 +214,6 @@ const TeamPanel = () => {
                     value={newMember.number}
                     onChange={handleMemberChange}
                   />
-                  </div>
-                  <div className='divisions'>
                   <input
                     type="email"
                     name="email"
@@ -249,8 +239,8 @@ const TeamPanel = () => {
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                     </select>
+                  <button onClick={addMember} className='logout'>+ Add Member</button>
                   </div>
-                  <button onClick={addMember} className='logout'>Add Member</button>
                 </div>
               )}
 
