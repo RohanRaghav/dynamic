@@ -1,7 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useRef  } from 'react'
 import Cards from '../Components/Cards'
 import Navbar from '../Components/Navbar';
 import axios from "axios";
+const useInView = (threshold = 0.1) => {
+  const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target); // Stops observing after triggering
+        }
+      },
+      { threshold }
+    );
+
+    if (ref.current) observer.observe(ref.current);
+
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return [ref, isVisible];
+};
 const MainPage = () => {
     const [showModals, setShowModals] = useState(false);
     const [formData, setFormData] = useState({
@@ -14,7 +36,8 @@ const MainPage = () => {
       gender: "",
       password:"",
     });
-  
+    
+    const [ref, isVisible] = useInView();
     const handleChange = (e) => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -102,16 +125,16 @@ const MainPage = () => {
     <div>
       
       <Navbar />
-        <div className='division'>
+        <div className='divisionss'>
       <div className='homepage'>
     <img className='back' src='/Back.png' alt='back' />
     <img src='/Front.png' alt='front' className='front' />
       </div>
-      <div className='content'>
+      <div className='contentss'>
         <div className='big'>
         Dynamic Hackathon
         </div>
-        <div className='medium'>
+        <div className='mediums'>
         Internal Hackathon 2025
         </div>
         <div>
@@ -154,7 +177,7 @@ const MainPage = () => {
         </div>
       )}
       <div className='division'>
-        <div className='content'>
+        <div className={`content ${isVisible ? "animate" : ""}`} ref={ref}>
             <div className='medium'>About Hackathon</div>
             <p>Dynamic Hackathon is an exciting platform designed to ignite
 innovation and tackle real-world challenges in crane safety,
@@ -204,6 +227,9 @@ handling systems.</p>
       <div className='medium'>Timeline</div>
       </div>
       <div className='division'>
+        <div className='timeline'>
+        <img src='/timeline.png' alt='timeline' className='timelineimage' />
+        </div>
         <div className='timelinecontainer'>
             <div>
         <div className='timeline1'><p>Launch of the Hackathon
@@ -231,14 +257,17 @@ handling systems.</p>
         </div>
       </div>
       <div>
+      <div className='adjust'>
+      <div className='medium'>Problem Statement</div>
+      </div>
         <Cards />
       </div>
-      <div className='division'>
-      <div className='content'>
+      <div className='divisionss'>
+      <div className='contentss'>
         <div className='medals'><img src='/medalfirst.png' alt='timeline' /> Winner <br />₹1,00,000</div>
         <div className='medals'><div className='medals'><img src='/medalsecond.png' alt='timeline' />1st Runner-Up <br />₹75000</div><div className='medals'><img src='/medalthird.png' alt='timeline' />2nd Runner-Up <br />₹50000</div></div>
       </div>
-      <div className='content'>
+      <div className='contentss'>
       <table>
         <tr>
             <th>Award Category</th>
@@ -275,6 +304,7 @@ handling systems.</p>
     </table>
       </div>
       </div>
+      <div className='making'>
       <div className='division'>
         <div className='content'>
           <img src='/miscellanious.png' alt='miscellanious' className='miscellanious' />
@@ -310,6 +340,7 @@ remains a trusted partner for empowering safe and efficient
 construction operations.</p>
 
 </div>
+      </div>
       </div>
       <div className="faq-container">
       <h2>Frequently Asked Questions</h2>
